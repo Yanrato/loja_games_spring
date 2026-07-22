@@ -9,8 +9,9 @@ import com.games.lojagames.model.ProdutoModel;
 
 public interface ProdutoRepository extends JpaRepository<ProdutoModel, Long>{
 
-	List<ProdutoModel>findByPrecoLessThanEqual(BigDecimal preco);
+	List<ProdutoModel>findAllByPrecoLessThanEqualOrderByPreco(BigDecimal preco);
 	
-	List<ProdutoModel>findByPrecoGreaterThanEqual(BigDecimal preco);
+	List<ProdutoModel>findAllByPrecoGreaterThanEqualOrderByPreco(BigDecimal preco);
+	
 
 }

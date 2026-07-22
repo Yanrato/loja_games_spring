@@ -28,52 +28,51 @@ import jakarta.validation.Valid;
 @RequestMapping("/produtos")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProdutoController {
-	
+
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
+
 	@GetMapping
-	public ResponseEntity<List<ProdutoModel>> getAll(){
+	public ResponseEntity<List<ProdutoModel>> getAll() {
 		return ResponseEntity.ok(produtoRepository.findAll());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ProdutoModel> getById(@PathVariable Long id){
-		return produtoRepository.findById(id)
-				.map(resposta -> ResponseEntity.ok(resposta))
-						.orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<ProdutoModel> getById(@PathVariable Long id) {
+		return produtoRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
+				.orElse(ResponseEntity.notFound().build());
 	}
-	
+
 	@GetMapping("/menorque/{preco}")
-	public ResponseEntity<List<ProdutoModel>> getByMenorQue(@PathVariable BigDecimal preco) {
-	    return ResponseEntity.ok(produtoRepository.findByPrecoLessThanEqual(preco));
+	public ResponseEntity<List<ProdutoModel>> getAllMenorQue(@PathVariable BigDecimal preco) {
+		return ResponseEntity.ok(produtoRepository.findAllByPrecoLessThanEqualOrderByPreco(preco));
 	}
-	
+
 	@GetMapping("maiorque/{preco}")
-	public ResponseEntity<List<ProdutoModel>> getByMaiorQue(@PathVariable BigDecimal preco){
-		return ResponseEntity.ok(produtoRepository.findByPrecoGreaterThanEqual(preco));
+	public ResponseEntity<List<ProdutoModel>> getAllMaiorQue(@PathVariable BigDecimal preco) {
+		return ResponseEntity.ok(produtoRepository.findAllByPrecoGreaterThanEqualOrderByPreco(preco));
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<ProdutoModel> post(@Valid @RequestBody ProdutoModel produtoModel){
+	public ResponseEntity<ProdutoModel> post(@Valid @RequestBody ProdutoModel produtoModel) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produtoModel));
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<ProdutoModel> put(@Valid @RequestBody ProdutoModel produtoModel){
-		if(produtoRepository.existsById(produtoModel.getId()))
+	public ResponseEntity<ProdutoModel> put(@Valid @RequestBody ProdutoModel produtoModel) {
+		if (produtoRepository.existsById(produtoModel.getId()))
 			return ResponseEntity.ok(produtoRepository.save(produtoModel));
-		
+
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id){
-		Optional<ProdutoModel> produto = produtoRepository.findById(id);	
-		
-		if(produto.isEmpty())
+	public void delete(@PathVariable Long id) {
+		Optional<ProdutoModel> produto = produtoRepository.findById(id);
+
+		if (produto.isEmpty())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		produtoRepository.deleteById(id);
-		}
+	}
 }
