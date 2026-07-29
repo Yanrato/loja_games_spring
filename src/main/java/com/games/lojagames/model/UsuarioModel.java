@@ -4,7 +4,12 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,6 +27,7 @@ public class UsuarioModel {
     @Size(max = 255, message = "O atributo Nome deve conter no máximo 255 caracteres!")
     private String nome;
 
+    @Schema(example = "email@email.com.br")
     @NotBlank(message = "O atributo Usuário é obrigatório!")
     @Email(message = "O atributo Usuário deve ser um e-mail válido!")
     @Size(max = 255, message = "O atributo Usuário deve conter no máximo 255 caracteres!")
