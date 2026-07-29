@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.games.lojagames.model.CategoriaModel;
-import com.games.lojagames.model.ProdutoModel;
 import com.games.lojagames.repository.CategoriaRepository;
 
 import jakarta.validation.Valid;
@@ -44,9 +42,9 @@ public class CategoriaController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 
-	@GetMapping("categoria/{categoria}")
-	public ResponseEntity<List<CategoriaModel>> getByCategoria(@PathVariable String categoria) {
-		return ResponseEntity.ok(categoriaRepository.findAllByCategoriaContainingIgnoreCase(categoria));
+	@GetMapping("tipo/{tipo}")
+	public ResponseEntity<List<CategoriaModel>> getByCategoria(@PathVariable String tipo) {
+		return ResponseEntity.ok(categoriaRepository.findAllByTipoContainingIgnoreCase(tipo));
 	}
 
 	@PostMapping
@@ -62,7 +60,7 @@ public class CategoriaController {
 
 	}
 
-	@ResponseStatus
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 

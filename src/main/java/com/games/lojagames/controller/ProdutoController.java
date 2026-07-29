@@ -48,7 +48,7 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoRepository.findAllByPrecoLessThanEqualOrderByPreco(preco));
 	}
 
-	@GetMapping("maiorque/{preco}")
+	@GetMapping("/maiorque/{preco}")
 	public ResponseEntity<List<ProdutoModel>> getAllMaiorQue(@PathVariable BigDecimal preco) {
 		return ResponseEntity.ok(produtoRepository.findAllByPrecoGreaterThanEqualOrderByPreco(preco));
 	}

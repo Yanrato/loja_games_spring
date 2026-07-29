@@ -28,9 +28,9 @@ public class CategoriaModel {
 	private Long id;
 
 	@NotBlank
-	@Size(min = 4, max = 20, message = "A categoria deve ter no minimo 4 caracteres e no maximo 20")
-	@Column(length = 20)
-	private String categoria;
+	@Size(min = 3, max = 100, message = "A categoria deve ter no minimo 3 caracteres e no maximo 100")
+	@Column(length = 100)
+	private String tipo;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties(value = "categoria", allowSetters = true)
@@ -44,12 +44,12 @@ public class CategoriaModel {
 		this.id = id;
 	}
 
-	public String getCategoria() {
-		return categoria;
+	public String getTipo() {
+		return tipo;
 	}
 
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public List<ProdutoModel> getProduto() {
