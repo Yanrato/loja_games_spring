@@ -57,6 +57,8 @@ public class UsuarioService {
 
 	public Optional<UsuarioModel> atualizarUsuario(UsuarioModel usuario) {
 
+		validarIdade(usuario);
+		
 		if (usuarioRepository.findById(usuario.getId()).isEmpty()) {
 			return Optional.empty();
 		}
